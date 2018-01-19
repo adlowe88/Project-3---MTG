@@ -13,6 +13,63 @@
 
 
 <script>
+  const suits = [ "C", "H", "S", "D" ];
+  const ranks = ["1","2","3","4","5","6","7","8","9","10","11","12","13"];
+
+  class Card {
+    constructor(rank, suit) {
+      this.rank = rank;
+      this.suit = suit;
+    }
+
+    getValue() {
+      let value = null;
+      if ( +this.rank === 1 ) {
+        value = 11;
+      }
+      else if ( +this.rank >= 2 || +this.rank <= 10 ) {
+        value = this.rank
+      }
+      else if ( +this.rank >= 11 ) {
+        value = 10;
+      }
+      return value;
+    }
+
+    displayRank() {
+      let rank = null;
+      if ( this.rank === "11" ) {
+        rank = "Jack";
+      }
+      else if ( this.rank === "12" ) {
+        rank = "Queen";
+      }
+      else if ( this.rank === "13" ) {
+        rank = "King";
+      }
+      else if ( this.rank === "1" ) {
+        rank = "Ace";
+      }
+      return rank;
+    }
+  }
+
+  class Deck {
+    constructor() {
+      let cards = [];
+      suits.forEach( function ( suit ) {
+        ranks.forEach( function ( rank ) {
+          cards.push( new Card(rank, suit) );
+        });
+      });
+      this.cards = cards;
+    }
+
+    shuffle() {
+
+    }
+  }
+
   $('.hit').on('click', function () {
     console.log(this);
     <% #{hit} %>

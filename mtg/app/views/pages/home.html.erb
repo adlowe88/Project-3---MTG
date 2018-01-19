@@ -1,0 +1,93 @@
+<h1>Home</h1>
+<div class="player hand"></div>
+<script>
+  const playerHand = [];
+  const baseURL = 'https://api.magicthegathering.io/v1/cards';
+
+  const Card = function () {
+    this.info = null;
+    this.status = {
+      tapped: false
+    }
+  };
+
+  const addCardToHand = function ( cardName ) {
+    return $.getJSON( `${ baseURL }?name=${ cardName }` ).done( function ( response ) {
+      const card = new Card;
+      card.info = response.cards[0];
+      playerHand.push( card );
+    } );
+  }
+
+  // Test Mountain
+  // fetchCards( 'mountain' ).done( function ( response ) {
+  //   const card = response.cards[0];
+  //   console.log( card, card.imageUrl );
+  //
+  //   const $image = $( '<img>' );
+  //   $image.attr( 'src', card.imageUrl );
+  //   console.log( $image );
+  //
+  //   $image.appendTo( '.player.hand' );
+  // } );
+  // End Test Mountain
+
+  // const addCardToHand = function ( response ) {
+  //   const card = response.cards[0];
+  //   console.log( card, card.imageUrl );
+  //
+  //   const $image = $( '<img>' );
+  //   $image.attr( 'src', card.imageUrl );
+  //   console.log( $image );
+  //
+  //   $image.appendTo( '.player.hand' );
+  // }
+
+  // const mountain = fetchCards( 'mountain' ).done( function ( response ) {
+  //   playerHand.push( response.cards[0] );
+  // } );
+
+  const renderHand = function ( hand ) {
+    $( '.player.hand' ).empty();
+    hand.forEach( function ( card, index ) {
+      const $image = $( '<img>' );
+      $image.attr( 'src', card.info.imageUrl );
+      if ( card.status.tapped ) {
+        $image.css( { transform: 'rotate(90deg) translateX( -250px)', 'transform-origin': 'bottom left' } );
+      }
+      $image.data( 'key', index );
+
+      $image.appendTo( '.player.hand' );
+    } );
+  }
+
+  // Test
+  // const $testImage = $( '<div>' );
+  // $testImage.css( { 'background-color': 'black', width: '250px', height: '350px'  } );
+  //
+  // $testImage.appendTo( '.player.hand' );
+  // End Test
+
+  $( '.player.hand' ).on( 'click', 'img', function () {
+    const key = $( this ).data( 'key' );
+    console.log( key );
+    const card = playerHand[ key ]
+    console.log( card );
+    card.status.tapped = !card.status.tapped;
+    renderHand( playerHand );
+  } );
+
+  addCardToHand( 'plains' );
+  addCardToHand( 'savannah lions' );
+  addCardToHand( 'loxodon warhammer' );
+  renderHand( playerHand );
+
+  const tap = function ( $cardId ) {
+    cardId.css( { transform: 'rotate(90deg) translateX( -250px)', 'transform-origin': 'bottom left' } );
+  }
+
+  const unTap = function ( $cardId ) {
+    cardId.css( { transform: 'none' } );
+  }
+
+</script>
