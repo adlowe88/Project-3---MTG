@@ -5,14 +5,15 @@
   <button class="stay">Stay</button>
 </div>
 
-<div class="player-cards">Rank: <%= @player1.hand[0].rank %> Suit: <%= @player1.hand[0].suit %></div>
-<div class="player-cards">Rank: <%= @player1.hand[1].rank %> Suit: <%= @player1.hand[1].suit %></div>
+<!-- <div class="player-cards">Rank: <%= @player1.hand[0].rank %> Suit: <%= @player1.hand[0].suit %></div>
+<div class="player-cards">Rank: <%= @player1.hand[1].rank %> Suit: <%= @player1.hand[1].suit %></div> -->
 
+<div class="hand"></div>
 
 <p class="game-status"><%= @output %></p>
 
 
-<script>
+<!-- <script>
   const suits = [ "C", "H", "S", "D" ];
   const ranks = ["1","2","3","4","5","6","7","8","9","10","11","12","13"];
 
@@ -66,7 +67,22 @@
     }
 
     shuffle() {
+      var j, x, i;
+      for (i = this.cards.length - 1; i > 0; i--) {
+          j = Math.floor(Math.random() * (i + 1));
+          x = this.cards[i];
+          this.cards[i] = this.cards[j];
+          this.cards[j] = x;
+      }
+      return this.cards
+    }
 
+    draw() {
+      return this.cards.pop();
+    }
+
+    remaining() {
+      this.cards.length
     }
   }
 
@@ -74,4 +90,4 @@
     console.log(this);
     <% #{hit} %>
   });
-</script>
+</script> -->
