@@ -1,93 +1,25 @@
 <h1>Black Jack the Gathering!</h1>
 
-<div class="controls">
-  <button class="hit">Hit</button>
-  <button class="stay">Stay</button>
+<div class="container">
+  <div class="controls">
+    <button class="hit-player1">Hit</button>
+    <button class="stay-player1">Stay</button>
+    <p class='score-player1'></p>
+  </div>
+  <div class="player1 hand">
+  </div>
+  <p class="player1-status"><%= @output %></p>
 </div>
 
-<!-- <div class="player-cards">Rank: <%= @player1.hand[0].rank %> Suit: <%= @player1.hand[0].suit %></div>
-<div class="player-cards">Rank: <%= @player1.hand[1].rank %> Suit: <%= @player1.hand[1].suit %></div> -->
-
-<div class="hand"></div>
+<div class="container">
+  <div class="controls">
+    <button class="hit-player2">Hit</button>
+    <button class="stay-player2">Stay</button>
+    <p class='score-player2'></p>
+  </div>
+  <div class="player2 hand">
+  </div>
+  <p class="player2-status"><%= @output %></p>
+</div>
 
 <p class="game-status"><%= @output %></p>
-
-
-<!-- <script>
-  const suits = [ "C", "H", "S", "D" ];
-  const ranks = ["1","2","3","4","5","6","7","8","9","10","11","12","13"];
-
-  class Card {
-    constructor(rank, suit) {
-      this.rank = rank;
-      this.suit = suit;
-    }
-
-    getValue() {
-      let value = null;
-      if ( +this.rank === 1 ) {
-        value = 11;
-      }
-      else if ( +this.rank >= 2 || +this.rank <= 10 ) {
-        value = this.rank
-      }
-      else if ( +this.rank >= 11 ) {
-        value = 10;
-      }
-      return value;
-    }
-
-    displayRank() {
-      let rank = null;
-      if ( this.rank === "11" ) {
-        rank = "Jack";
-      }
-      else if ( this.rank === "12" ) {
-        rank = "Queen";
-      }
-      else if ( this.rank === "13" ) {
-        rank = "King";
-      }
-      else if ( this.rank === "1" ) {
-        rank = "Ace";
-      }
-      return rank;
-    }
-  }
-
-  class Deck {
-    constructor() {
-      let cards = [];
-      suits.forEach( function ( suit ) {
-        ranks.forEach( function ( rank ) {
-          cards.push( new Card(rank, suit) );
-        });
-      });
-      this.cards = cards;
-    }
-
-    shuffle() {
-      var j, x, i;
-      for (i = this.cards.length - 1; i > 0; i--) {
-          j = Math.floor(Math.random() * (i + 1));
-          x = this.cards[i];
-          this.cards[i] = this.cards[j];
-          this.cards[j] = x;
-      }
-      return this.cards
-    }
-
-    draw() {
-      return this.cards.pop();
-    }
-
-    remaining() {
-      this.cards.length
-    }
-  }
-
-  $('.hit').on('click', function () {
-    console.log(this);
-    <% #{hit} %>
-  });
-</script> -->

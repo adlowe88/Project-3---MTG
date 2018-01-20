@@ -99,13 +99,13 @@ class Player {
   checkGameOver() {
     if ( this.handValue === 21 ) {
       this.gameOver = true;
-      this.gameStatus = 'Player 1 wins!!';
+      // this.gameStatus = 'Player 1 wins!!';
     }
     else if ( this.handValue > 21 ) {
       this.switchAce();
       if ( this.handValue > 21 ) {
         this.gameOver = true;
-        this.gameStatus = 'Player 1 bust';
+        // this.gameStatus = 'Player 1 bust';
       }
     }
     else {
@@ -114,19 +114,24 @@ class Player {
   }
 
   checkWinner() {
-    player1.gameOver = true;
-    console.log( 'check winner', player1.handValue, player2.handValue );
-    if ( player1.handValue > player2.handValue ) {
-      this.gameStatus = 'Player 1 wins!!';
-    }
-    else if ( player1.handValue === player2.handValue ) {
-      this.gameStatus = 'Game drawn!';
-    }
-    else {
-      this.gameStatus = 'Player 2 wins!';
+    this.gameOver = true;
+    console.log( player1.gameOver, player2.gameOver );
+    if ( player1.gameOver && player2.gameOver ) {
+      console.log( 'check winner', player1.handValue, player2.handValue );
+      if ( player1.handValue > player2.handValue ) {
+        game.status = 'Player 1 wins!!';
+      }
+      else if ( player1.handValue === player2.handValue ) {
+        game.status = 'Game drawn!';
+      }
+      else {
+        game.status = 'Player 2 wins!';
+      }
     }
   }
 }
+
+const game = { status: '' }
 
 
 $( document ).ready( function () {
@@ -138,31 +143,57 @@ $( document ).ready( function () {
   player1.checkGameOver();
   render();
 
-  $( '.hit' ).on( 'click', function () {
+  $( '.hit-player1' ).on( 'click', function () {
     if ( player1.gameOver ) { return };
     player1.hit();
     player1.checkGameOver();
+    render();1
+  });
+
+  $( '.stay-player1' ).on( 'click', function () {
+    if ( player1.gameOver ) { return };
+    player1.checkWinner();
+    render();
+  } );
+
+  $( '.hit-player2' ).on( 'click', function () {
+    if ( player2.gameOver ) { return };
+    player2.hit();
+    player2.checkGameOver();
     render();
   });
 
-  $( '.stay' ).on( 'click', function () {
-    if ( player1.gameOver ) { return };
-    player1.checkWinner();
+  $( '.stay-player2' ).on( 'click', function () {
+    if ( player2.gameOver ) { return };
+    player2.checkWinner();
     render();
   } );
 } );
 
 const render = function () {
-  $( '.hand' ).empty();
+  $( '.player1' ).empty();
   const hand = player1.hand;
-  hand.forEach( renderCard );
+  hand.forEach( renderCard1 );
+  $( '.score-player1' ).text( player1.handValue );
 
-  $( '.game-status' ).text( player1.gameStatus );
+  $( '.player2' ).empty();
+  const hand2 = player2.hand;
+  hand2.forEach( renderCard2 );
+  $( '.score-player2' ).text( player2.handValue );
+
+  $( '.game-status' ).text( game.status );
 }
 
-const renderCard = function ( card ) {
+const renderCard1 = function ( card ) {
   let $div = $( '<div>' );
   $div.text( `Rank: ${ card.displayRank() }${ card.suit }` );
   $div.addClass( 'player-cards' );
-  $div.appendTo( '.hand' );
+  $div.appendTo( '.player1' );
+}
+
+const renderCard2 = function ( card ) {
+  let $div = $( '<div>' );
+  $div.text( `Rank: ${ card.displayRank() }${ card.suit }` );
+  $div.addClass( 'player-cards' );
+  $div.appendTo( '.player2' );
 }
