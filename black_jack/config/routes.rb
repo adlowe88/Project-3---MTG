@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/rooms", to: "rooms#show"
 
   post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 
   resources :users, only: [ :create, :show ]
 
