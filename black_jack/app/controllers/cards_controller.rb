@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   def show
-    @card = Card.where( user_id: params[ :user_id ] )
+    @card = Card.where( user_id: session[ :user_id ] )
     respond_to do |format|
       format.html { redirect_to @card }
       format.js {}
